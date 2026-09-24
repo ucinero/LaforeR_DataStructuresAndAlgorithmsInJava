@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/ucinero/Documents/LaforeR_DataStructuresAndAlgorithmsInJava/Chapter01_Overview",
+      "program": "/Users/ucinero/Documents/LaforeR_DataStructuresAndAlgorithmsInJava/Chapter01_Overview/build/Debug/outDebug"
+    }
+  ]
+}
