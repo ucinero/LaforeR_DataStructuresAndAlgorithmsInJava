@@ -9,8 +9,9 @@ class Link {
     public:
         long dData;
         Link* next;
+        Link* previous;
     public:
-        Link(long dd) : dData(dd), next(nullptr) {}
+        Link(long dd) : dData(dd), next(nullptr), previous(nullptr) {}
         void displayLink() {
             cout << dData << " ";
         }
@@ -59,10 +60,13 @@ class CircularList {
             Link* newLink = new Link(key);
             if (isEmpty()) {
                 current = newLink;
-                newLink->next = current;
+                newLink->next = newLink;
+                newLink->previous = newLink;
                 return;
             }
             newLink->next = current->next;
+            newLink->next->previous = newLink;--
+            newLink->previous = current;
             current->next = newLink;
             current = newLink;
         }
@@ -75,30 +79,13 @@ class CircularList {
                 current = nullptr;
                 return dData;
             }
-            Link* temp = current->next;
-            long dData = temp->dData;
-            current->next = temp->next;
+            Link* temp = current;
+            long dData = current->dData;
+            current = temp->previous;
+            temp->previous->next = temp->next;
+            temp->next->previous = temp->previous;
             delete temp;
             return dData;
-        }
-        long removeCurrent() {
-            if (isEmpty())
-                return 0;
-            if (current->next == current) {
-                long d = current->dData;
-                delete current;
-                current = nullptr;
-                return d;
-            }
-            Link* prev = current;
-            while (prev->next != current)
-                prev = prev->next;
-            long d = current->dData;
-            Link* toDelete = current;
-            prev->next = current->next;
-            current = prev;
-            delete toDelete;
-            return d;
         }
         void display() {
             if (isEmpty())
@@ -115,9 +102,10 @@ class CircularList {
             } while (temp != start);
         }
         long getCurrent() {
+            if (isEmpty())
+                return 0;
             return current->dData;
         }
-        
 };
 
 class StackX {
@@ -143,7 +131,7 @@ class StackX {
             if (nItems == 0)
                 return 0;
             nItems--;
-            return stackArray->removeCurrent();
+            return stackArray->remove();
         }
         long peek() {
             return stackArray->getCurrent();

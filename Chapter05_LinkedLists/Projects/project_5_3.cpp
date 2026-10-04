@@ -7,8 +7,9 @@ class Link {
     public:
         long dData;
         Link* next;
+        Link* previous;
     public:
-        Link(long dd) : dData(dd), next(nullptr) {}
+        Link(long dd) : dData(dd), next(nullptr), previous(nullptr) {}
         void displayLink() {
             cout << dData << " ";
         }
@@ -57,10 +58,13 @@ class CircularList {
             Link* newLink = new Link(key);
             if (isEmpty()) {
                 current = newLink;
-                newLink->next = current;
+                newLink->next = newLink;
+                newLink->previous = newLink;
                 return;
             }
             newLink->next = current->next;
+            newLink->next->previous = newLink;--
+            newLink->previous = current;
             current->next = newLink;
             current = newLink;
         }
@@ -73,9 +77,11 @@ class CircularList {
                 current = nullptr;
                 return dData;
             }
-            Link* temp = current->next;
-            long dData = temp->dData;
-            current->next = temp->next;
+            Link* temp = current;
+            long dData = current->dData;
+            current = temp->previous;
+            temp->previous->next = temp->next;
+            temp->next->previous = temp->previous;
             delete temp;
             return dData;
         }
@@ -206,7 +212,7 @@ int main() {
     }
 
     // =========================================================
-    // ТЕСТ 6: remove() — удаление следующего за current
+    // ТЕСТ 6: remove() — удаление текущего элемента (current)
     // =========================================================
     cout << "=== ТЕСТ 6: remove() ===" << endl;
     {
@@ -216,22 +222,23 @@ int main() {
         list.insert(30);   // [10,20,30],     current=30
 
         // список: 10 -> 20 -> 30 -> (10), current=30
-        // следующий за current: 10
-        cout << "remove (ожидаем 10): " << list.remove() << endl;
-        // список: 20 -> 30 -> (20), current=30
-        cout << "display (ожидаем 30 20): ";
-        list.display();
-        cout << endl;
 
-        // следующий за current=30: 20
-        cout << "remove (ожидаем 20): " << list.remove() << endl;
-        // остался только 30, current=30, next=30
-        cout << "display (ожидаем 30): ";
-        list.display();
-        cout << endl;
-
-        // следующий за current=30: сам 30
+        // удаляется сам current=30, current сдвигается на 10
         cout << "remove (ожидаем 30): " << list.remove() << endl;
+        // список: 10 -> 20 -> (10), current=10
+        cout << "display (ожидаем 20 10): ";
+        list.display();
+        cout << endl;
+
+        // удаляется current=10, current сдвигается на 20
+        cout << "remove (ожидаем 20): " << list.remove() << endl;
+        // список: 20 -> (20), current=20
+        cout << "display (ожидаем 10): ";
+        list.display();
+        cout << endl;
+
+        // удаляется current=20 — список пуст
+        cout << "remove (ожидаем 10): " << list.remove() << endl;
         cout << "isEmpty (ожидаем 1): " << list.isEmpty() << endl;
     }
 
