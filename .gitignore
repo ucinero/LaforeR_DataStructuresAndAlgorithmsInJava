@@ -1,0 +1,40 @@
+# C++ артефакты компиляции
+*.o
+*.obj
+*.exe
+*.out
+*.app
+*.dSYM/
+*.dSYM
+a.out
+*.gch
+*.pch
+*.so
+*.dylib
+*.a
+*.lib
+
+# Система сборки (CMake/Make)
+build/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+
+# VS Code (оставляем только полезные общие настройки)
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+# macOS
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Логи и временные файлы
+*.log
+core
+*.core
+*.swp
+*~
