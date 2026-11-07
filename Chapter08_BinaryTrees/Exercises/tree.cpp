@@ -228,7 +228,7 @@ class Tree {
                     cout << ' ';
 
                 while (globalStack->isEmpty() == false) {
-                    Node* temp = reinterpret_cast<Node*>(globalStack->pop());
+                    Node* temp = globalStack->pop();
                     if (temp != nullptr) {
                         cout << temp->iData;
                         localStack->push(temp->leftChild);
