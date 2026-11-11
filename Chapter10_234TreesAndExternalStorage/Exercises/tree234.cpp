@@ -143,6 +143,8 @@ class Tree234 {
             newRight->connectChild(1, child3);
         }
         void recDisplayTree(Node* thisNode, int level, int childNumber) {
+            if (thisNode == nullptr)
+                return;
             cout << "level = " << level << ", child = " << childNumber << " ";
             thisNode->displayNode();
 
